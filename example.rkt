@@ -18,11 +18,11 @@
 
   ;; variations, you can interchange a, b, c, etc.
   (slide
-    @b{Whereas recognition of the @a{inherent dignity} and of the @b{equal}
-       and @a{inalienable rights} of all members of the human family is
+    @b{Whereas recognition of the @c{inherent dignity} and of the @b{equal}
+       and @c{inalienable rights} of all members of the human family is
        the foundation of @c{freedom}, @c{justice} and @c{peace} in the world})
 
   (slide
     @c{Whereas recognition of the @b{inherent dignity} and of the @b{equal}
        and @b{inalienable rights} of all members of the human family is
-       the foundation of @a{freedom}, @a{justice} and @a{peace} in the world}))
+       the foundation of @b{freedom}, @b{justice} and @b{peace} in the world}))
