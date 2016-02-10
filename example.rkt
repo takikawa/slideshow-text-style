@@ -3,15 +3,12 @@
 (require slideshow-style)
 
 (with-style
+  #:defaults [#:face "Bitstream Vera Sans, Bold"
+              #:size 27]
   ([a #:face "Bistream Vera Sans"
-      #:color "DimGray"
-      #:size 27]
-   [b #:face "Bitstream Vera Sans, Bold"
-      #:color "CornflowerBlue"
-      #:size 27]
-   [c #:face "Bistream Vera Sans, Bold"
-      #:color "Tomato"
-      #:size 27])
+      #:color "DimGray"]
+   [b #:color "CornflowerBlue"]
+   [c #:color "Tomato"])
 
   (slide
     @a{Whereas recognition of the @b{inherent dignity} and of the equal

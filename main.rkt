@@ -12,10 +12,10 @@
 
 (begin-for-syntax
   (define-syntax-class style-spec
-    #:attributes (binder)
+    #:attributes (result)
     (pattern (name:id options:style-options)
-             #:with binder #'[name (styled-text . options)])
-    ;; TODO: implement this case
+             #:with result #'[#:kws name options])
+    ;; TODO: implement this case, how should it interact with defaults?
     #;
     (pattern font-object-or-style))
 
@@ -23,17 +23,41 @@
     (pattern (~seq (~or (~optional (~seq #:face face:expr))
                         (~optional (~seq #:color color:expr))
                         (~optional (~seq #:size size:expr)))
-                   ...))))
+                   ...)))
+
+  (define-splicing-syntax-class style-defaults
+    #:attributes (options)
+    (pattern (~seq) #:with options #'())
+    (pattern (~seq #:defaults [options:style-options]))))
 
 (define-syntax (with-style stx)
   (syntax-parse stx
-    [(_ (style:style-spec ...)
-        body)
-     #'(let (style.binder ...) body)]))
+    [(_ maybe-defaults:style-defaults
+        (style:style-spec ...)
+        body:expr ...)
+     (with-syntax ([(st) (generate-temporaries '(st))])
+       #'(let ()
+           (define st (styled-text . maybe-defaults.options))
+           (with-style* st (style.result ...) body ...)))]))
 
-(define ((styled-text #:size [size (current-font-size)]
-                      #:color [color "black"]
-                      #:face [face #f])
+(define-syntax with-style*
+  (syntax-rules ()
+    [(_ st () body ...)
+     (begin body ...)]
+    [(_ st ([#:kws name options] style ...) body ...)
+     (let ([name (st . options)])
+       (with-style* st (style ...) body ...))]))
+
+;; A double-curried function that produces styled text picts
+;; The first level of currying is for default arguments.
+;; The second level is for style settings for a given styler.
+;; The other args are the actual strings/picts provided
+(define (((styled-text #:size [default-size (current-font-size)]
+                       #:color [default-color "black"]
+                       #:face [default-face null])
+          #:size [size default-size]
+          #:color [color default-color]
+          #:face [face default-face])
          . strs-or-picts)
   (define font-style
     ;; TODO: expand this further
