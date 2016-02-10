@@ -18,14 +18,18 @@
 
   ;; variations, you can interchange a, b, c, etc.
   (slide
-    @b{Whereas recognition of the @c{inherent dignity} and of the @b{equal}
+    @b[#:face "Bitstream Vera Sans"]{
+       Whereas recognition of the @c{inherent dignity} and of the @b{equal}
        and @c{inalienable rights} of all members of the human family is
-       the foundation of @c{freedom}, @c{justice} and @c{peace} in the world})
+       the foundation of @c{freedom}, @c{justice} and @c{peace} in the world
+    })
 
   (slide
-    @c{Whereas recognition of the @b{inherent dignity} and of the @b{equal}
-       and @b{inalienable rights} of all members of the human family is
-       the foundation of @b{freedom}, @b{justice} and @b{peace} in the world})
+    @c[#:face "Bistream Vera Sans"]{
+      Whereas recognition of the @b{inherent dignity} and of the @b{equal}
+      and @b{inalienable rights} of all members of the human family is
+      the foundation of @b{freedom}, @b{justice} and @b{peace} in the world
+    })
 
   ;; you can override anything at specific call-sites
   (define p "LavenderBlush")
