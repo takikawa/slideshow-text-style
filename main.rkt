@@ -52,15 +52,20 @@
 ;; A double-curried function that produces styled text picts
 ;; The first level of currying is for default arguments.
 ;; The second level is for style settings for a given styler.
-;; The other args are the actual strings/picts provided
 (define (((styled-text #:size [default-size (current-font-size)]
                        #:color [default-color "black"]
                        #:face [default-face null]
                        #:line-sep [default-ls 0])
-          #:size [size default-size]
-          #:color [color default-color]
-          #:face [face default-face]
-          #:line-sep [line-sep default-ls])
+          #:size [*size default-size]
+          #:color [*color default-color]
+          #:face [*face default-face]
+          #:line-sep [*line-sep default-ls])
+         ;; for overriding at specific call sites
+         #:size [size *size]
+         #:color [color *color]
+         #:face [face *face]
+         #:line-sep [line-sep *line-sep]
+         ;; the actual strings/picts provided
          . strs-or-picts)
   (define font-style
     ;; TODO: expand this further

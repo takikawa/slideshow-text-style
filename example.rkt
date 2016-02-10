@@ -16,6 +16,20 @@
        and @b{inalienable rights} of all members of the human family is
        the foundation of @c{freedom}, @c{justice} and @c{peace} in the world})
 
+  ;; you can override anything at specific call-sites
+  (define p "LavenderBlush")
+  (define l "LightYellow")
+  (slide
+    (cc-superimpose
+      (colorize (filled-rectangle client-w (* 0.5 client-h)) "DimGray")
+      @a[#:color "white"]{
+        Whereas recognition of the @b[#:color p]{inherent dignity} @;
+        and of the @b[#:color p]{equal}
+        and @b[#:color p]{inalienable rights} of all members of the @;
+        human family is
+        the foundation of @c[#:color l]{freedom}, @c[#:color l]{justice} @;
+        and @c[#:color l]{peace} in the world}))
+
   ;; variations, you can interchange a, b, c, etc.
   (slide
     @b{Whereas recognition of the @c{inherent dignity} and of the @b{equal}
