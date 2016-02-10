@@ -49,5 +49,5 @@
   (define my-fish @standard-fish[70 35 #:color "LavenderBlush"])
   (slide
     @a{Whereas recognition of the @b{inherent dignity} and of the @b{equal}
-       and @b{inalienable rights} of all members of the @my-fish family
-       is the foundation of @b{freedom}, @b{justice} and @b{peace} in the world}))
+       and @b{inalienable rights} of all members of the @my-fish family is
+       the foundation of @b{freedom}, @b{justice} and @b{peace} in the world}))
