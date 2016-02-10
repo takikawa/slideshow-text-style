@@ -22,7 +22,8 @@
   (define-splicing-syntax-class style-options
     (pattern (~seq (~or (~optional (~seq #:face face:expr))
                         (~optional (~seq #:color color:expr))
-                        (~optional (~seq #:size size:expr)))
+                        (~optional (~seq #:size size:expr))
+                        (~optional (~seq #:line-sep line-sep:expr)))
                    ...)))
 
   (define-splicing-syntax-class style-defaults
@@ -54,10 +55,12 @@
 ;; The other args are the actual strings/picts provided
 (define (((styled-text #:size [default-size (current-font-size)]
                        #:color [default-color "black"]
-                       #:face [default-face null])
+                       #:face [default-face null]
+                       #:line-sep [default-ls 0])
           #:size [size default-size]
           #:color [color default-color]
-          #:face [face default-face])
+          #:face [face default-face]
+          #:line-sep [line-sep default-ls])
          . strs-or-picts)
   (define font-style
     ;; TODO: expand this further
@@ -76,4 +79,4 @@
                       str-or-pict]
                      [else
                       (error "expected a string or pict argument")]))))
-    (vl-append txt line-pict)))
+    (vl-append line-sep txt line-pict)))
