@@ -1,6 +1,6 @@
 #lang at-exp slideshow
 
-(require slideshow-style)
+(require slideshow-text-style)
 
 (with-style
   #:defaults [#:face "Bitstream Vera Sans, Bold"
