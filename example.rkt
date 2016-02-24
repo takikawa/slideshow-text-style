@@ -2,7 +2,7 @@
 
 (require slideshow-text-style)
 
-(with-style
+(with-stylers
   #:defaults [#:face "Bitstream Vera Sans, Bold"
               #:size 27
               #:line-sep 7]

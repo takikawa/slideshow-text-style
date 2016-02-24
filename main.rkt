@@ -8,7 +8,7 @@
          (for-syntax racket/base
                      syntax/parse))
 
-(provide with-style)
+(provide with-stylers)
 
 (begin-for-syntax
   (define-syntax-class style-spec
@@ -31,7 +31,7 @@
     (pattern (~seq) #:with options #'())
     (pattern (~seq #:defaults [options:style-options]))))
 
-(define-syntax (with-style stx)
+(define-syntax (with-stylers stx)
   (syntax-parse stx
     [(_ maybe-defaults:style-defaults
         (style:style-spec ...)
@@ -39,15 +39,15 @@
      (with-syntax ([(st) (generate-temporaries '(st))])
        #'(let ()
            (define st (styled-text . maybe-defaults.options))
-           (with-style* st (style.result ...) body ...)))]))
+           (with-stylers* st (style.result ...) body ...)))]))
 
-(define-syntax with-style*
+(define-syntax with-stylers*
   (syntax-rules ()
     [(_ st () body ...)
      (begin body ...)]
     [(_ st ([#:kws name options] style ...) body ...)
      (let ([name (st . options)])
-       (with-style* st (style ...) body ...))]))
+       (with-stylers* st (style ...) body ...))]))
 
 ;; A double-curried function that produces styled text picts
 ;; The first level of currying is for default arguments.
