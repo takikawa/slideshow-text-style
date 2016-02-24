@@ -12,6 +12,7 @@
 
 (begin-for-syntax
   (define-syntax-class style-spec
+    #:description "style specification"
     #:attributes (result)
     (pattern (name:id options:style-options)
              #:with result #'[#:kws name options])
