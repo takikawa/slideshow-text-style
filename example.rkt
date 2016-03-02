@@ -9,7 +9,9 @@
   ([a #:face "Bistream Vera Sans"
       #:color "DimGray"]
    [b #:color "CornflowerBlue"]
-   [c #:color "Tomato"])
+   [c #:color "Tomato"]
+   ;; a kind of inheritance
+   [(d c) #:face "Bitstream Vera Sans"])
 
   (slide
     @a{Whereas recognition of the @b{inherent dignity} and of the @b{equal}
@@ -25,7 +27,8 @@
     })
 
   (slide
-    @c[#:face "Bistream Vera Sans"]{
+    ;; d inherits from c but without bolding, see above
+    @d{
       Whereas recognition of the @b{inherent dignity} and of the @b{equal}
       and @b{inalienable rights} of all members of the human family is
       the foundation of @b{freedom}, @b{justice} and @b{peace} in the world

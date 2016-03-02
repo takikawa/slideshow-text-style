@@ -15,7 +15,9 @@
     #:description "style specification"
     #:attributes (result)
     (pattern (name:id options:style-options)
-             #:with result #'[#:kws name options])
+             #:with result #'[#:kws name #f options])
+    (pattern ((name:id super:id) options:style-options)
+             #:with result #'[#:kws name super options])
     ;; TODO: implement this case, how should it interact with defaults?
     #;
     (pattern font-object-or-style))
@@ -46,8 +48,14 @@
   (syntax-rules ()
     [(_ st () body ...)
      (begin body ...)]
-    [(_ st ([#:kws name options] style ...) body ...)
+    [(_ st ([#:kws name #f options] style ...) body ...)
      (let ([name (st . options)])
+       (with-stylers* st (style ...) body ...))]
+    [(_ st ([#:kws name super options] style ...) body ...)
+     (let ([name
+            (make-keyword-procedure
+             (λ (kws kw-args . rst)
+               (keyword-apply super kws kw-args rst . options)))])
        (with-stylers* st (style ...) body ...))]))
 
 ;; A double-curried function that produces styled text picts
