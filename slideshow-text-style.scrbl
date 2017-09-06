@@ -18,6 +18,8 @@ fancy text formatting in code for slides.
           (style-spec (name style-spec-item ...)
                       ((name parent) spec-item ...))
           (style-spec-item (code:line #:face expr)
+                           (code:line #:bold)
+                           (code:line #:italic)
                            (code:line #:color expr)
                            (code:line #:size expr)
                            (code:line #:line-sep expr)
