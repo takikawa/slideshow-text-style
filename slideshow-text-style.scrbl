@@ -20,7 +20,8 @@ fancy text formatting in code for slides.
           (style-spec-item (code:line #:face expr)
                            (code:line #:color expr)
                            (code:line #:size expr)
-                           (code:line #:line-sep expr))]]{
+                           (code:line #:line-sep expr)
+                           (code:line #:left-pad expr))]]{
 
 This form binds each @racket[name] in the @racket[style-spec]s to functions which
 produce formatted text using Slideshow's @racket[text] function. Each function

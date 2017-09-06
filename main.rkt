@@ -26,7 +26,8 @@
     (pattern (~seq (~or (~optional (~seq #:face face:expr))
                         (~optional (~seq #:color color:expr))
                         (~optional (~seq #:size size:expr))
-                        (~optional (~seq #:line-sep line-sep:expr)))
+                        (~optional (~seq #:line-sep line-sep:expr))
+                        (~optional (~seq #:left-pad left-pad:expr)))
                    ...)))
 
   (define-splicing-syntax-class style-defaults
@@ -64,16 +65,19 @@
 (define (((styled-text #:size [default-size (current-font-size)]
                        #:color [default-color "black"]
                        #:face [default-face null]
-                       #:line-sep [default-ls 0])
+                       #:line-sep [default-ls 0]
+		       #:left-pad [default-lp 0])
           #:size [*size default-size]
           #:color [*color default-color]
           #:face [*face default-face]
-          #:line-sep [*line-sep default-ls])
+          #:line-sep [*line-sep default-ls]
+	  #:left-pad [*left-pad default-lp])
          ;; for overriding at specific call sites
          #:size [size *size]
          #:color [color *color]
          #:face [face *face]
          #:line-sep [line-sep *line-sep]
+	 #:left-pad [left-pad *left-pad]
          ;; the actual strings/picts provided
          . strs-or-picts)
   (define font-style
@@ -93,4 +97,5 @@
                       str-or-pict]
                      [else
                       (error "expected a string or pict argument")]))))
-    (vl-append line-sep txt line-pict)))
+    (hbl-append (blank left-pad 1) ; just for padding
+		(vl-append line-sep txt line-pict))))
