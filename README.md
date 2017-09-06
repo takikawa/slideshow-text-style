@@ -4,8 +4,7 @@ slideshow-text-style
 This library provides a macro that allows convenient formatting of text
 in Slideshow presentations without manually constructing text picts.
 
-Docs and more polish forthcoming. Currently in pre-alpha state.
-See `example.rkt` for usage for now.
+See `example.rkt` for a usage example.
 
 ---
 
