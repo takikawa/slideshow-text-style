@@ -8,7 +8,7 @@
          (for-syntax racket/base
                      syntax/parse))
 
-(provide with-stylers)
+(provide with-text-style)
 
 (begin-for-syntax
   (define-syntax-class style-spec
@@ -34,7 +34,7 @@
     (pattern (~seq) #:with options #'())
     (pattern (~seq #:defaults [options:style-options]))))
 
-(define-syntax (with-stylers stx)
+(define-syntax (with-text-style stx)
   (syntax-parse stx
     [(_ maybe-defaults:style-defaults
         (style:style-spec ...)
