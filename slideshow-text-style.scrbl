@@ -34,6 +34,20 @@ the style of the parent function but with optionally overriden styles.
 
 If provided, @racket[maybe-defaults] specifies the default style specifications that
 are shared by all of the styling functions.
+
+The specifications have the following effects:
+
+@itemlist[
+  @item{@racket[#:face]: use the specified font face (e.g., @racket["Times New Roman"]).}
+  @item{@racket[#:bold?]: a boolean argument to turn bolding on or off}
+  @item{@racket[#:italic?]: a boolean argument to turn italics on or off}
+  @item{@racket[#:color]: colorize the text with the given color string}
+  @item{@racket[#:size]: use the given size for the text}
+  @item{@racket[#:line-sep]: a numeric argument specifying the sepration between
+        lines in the text in pict units}
+  @item{@racket[#:left-pad]: pad the produced pict on the left by the specified
+        numeric amount in pict units}
+]
 }
 
 Here is a full example that you can run:
