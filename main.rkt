@@ -29,7 +29,9 @@
                         (~optional (~seq #:size size:expr))
                         (~optional (~seq #:line-sep line-sep:expr))
                         (~optional (~seq #:left-pad left-pad:expr))
-                        (~optional (~seq #:transform xform:expr)))
+                        (~optional (~seq #:transform xform:expr))
+                        (~optional (~seq #:h-append h-append:expr))
+                        (~optional (~seq #:v-append v-append:expr)))
                    ...)))
 
   (define-splicing-syntax-class style-defaults
@@ -74,7 +76,9 @@
                        #:left-pad [default-lp 0]
                        #:bold? [default-bold? #f]
                        #:italic? [default-italic? #f]
-                       #:transform [default-transform values])
+                       #:transform [default-transform values]
+                       #:h-append [default-h-append hbl-append]
+                       #:v-append [default-v-append vl-append])
           #:size [*size default-size]
           #:color [*color default-color]
           #:face [*face default-face]
@@ -82,7 +86,9 @@
 	        #:left-pad [*left-pad default-lp]
 	        #:bold? [*bold? default-bold?]
 	        #:italic? [*italic? default-italic?]
-	        #:transform [*transform default-transform])
+	        #:transform [*transform default-transform]
+          #:h-append [*h-append default-h-append]
+          #:v-append [*v-append default-v-append])
     ;; for overriding at specific call sites
     #:size [size *size]
     #:color [color *color]
@@ -92,6 +98,8 @@
 	  #:bold? [bold? *bold?]
 	  #:italic? [italic? *italic?]
 	  #:transform [transform *transform]
+    #:h-append [h-append *h-append]
+    #:v-append [v-append *v-append]
     ;; the actual strings/picts provided
     . strs-or-picts)
   (define font-style
@@ -100,19 +108,20 @@
       .
       ,face))
   (define lines (split-lines strs-or-picts))
-  (for/fold ([txt (blank 0 0)])
-            ([line (in-list lines)])
-    (define line-pict
-      (apply hbl-append
-             (for/list ([str-or-pict (in-list line)])
-               (cond [(string? str-or-pict)
-                      ;; TODO: handle angle?
-                      (colorize (text str-or-pict font-style size)
-                                color)]
-                     [(pict? str-or-pict)
-                      str-or-pict]
-                     [else
-                      (error "expected a string or pict argument")]))))
-    (transform
-     (hbl-append (blank left-pad 1) ; just for padding
-                 (vl-append line-sep txt line-pict)))))
+  (define base
+    (for/fold ([txt (blank 0 0)])
+              ([line (in-list lines)])
+      (define line-pict
+        (apply h-append
+               (for/list ([str-or-pict (in-list line)])
+                 (cond [(string? str-or-pict)
+                        ;; TODO: handle angle?
+                        (colorize (text str-or-pict font-style size)
+                                  color)]
+                       [(pict? str-or-pict)
+                        str-or-pict]
+                       [else
+                        (error "expected a string or pict argument")]))))
+      (hbl-append (blank left-pad 1) ; just for padding
+                  (v-append line-sep txt line-pict))))
+  (transform base))
