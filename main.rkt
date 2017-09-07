@@ -24,6 +24,8 @@
 
   (define-splicing-syntax-class style-options
     (pattern (~seq (~or (~optional (~seq #:face face:expr))
+                        (~optional (~seq #:italic? italic?:expr))
+                        (~optional (~seq #:bold? bold?:expr))
                         (~optional (~seq #:color color:expr))
                         (~optional (~seq #:size size:expr))
                         (~optional (~seq #:line-sep line-sep:expr))
@@ -67,28 +69,28 @@
                        #:face [default-face null]
                        #:line-sep [default-ls 0]
 		       #:left-pad [default-lp 0]
-		       #:bold [default-bold #f]
-		       #:italic [default-italic #f])
+		       #:bold? [default-bold? #f]
+		       #:italic? [default-italic? #f])
           #:size [*size default-size]
           #:color [*color default-color]
           #:face [*face default-face]
           #:line-sep [*line-sep default-ls]
 	  #:left-pad [*left-pad default-lp]
-	  #:bold [*bold default-bold]
-	  #:italic [*italic default-italic])
+	  #:bold? [*bold? default-bold?]
+	  #:italic? [*italic? default-italic?])
          ;; for overriding at specific call sites
          #:size [size *size]
          #:color [color *color]
          #:face [face *face]
          #:line-sep [line-sep *line-sep]
 	 #:left-pad [left-pad *left-pad]
-	 #:bold [bold *bold]
-	 #:italic [italic *italic]
+	 #:bold? [bold? *bold?]
+	 #:italic? [italic? *italic?]
          ;; the actual strings/picts provided
          . strs-or-picts)
   (define font-style
-    `(,@(if bold '(bold) '())
-      ,@(if italic '(italic) '())
+    `(,@(if bold? '(bold) '())
+      ,@(if italic? '(italic) '())
       .
       ,face))
   (define lines (split-lines strs-or-picts))
