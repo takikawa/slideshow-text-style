@@ -28,7 +28,8 @@
                         (~optional (~seq #:color color:expr))
                         (~optional (~seq #:size size:expr))
                         (~optional (~seq #:line-sep line-sep:expr))
-                        (~optional (~seq #:left-pad left-pad:expr)))
+                        (~optional (~seq #:left-pad left-pad:expr))
+                        (~optional (~seq #:transform xform:expr)))
                    ...)))
 
   (define-splicing-syntax-class style-defaults
@@ -64,32 +65,35 @@
 ;; The first level of currying is for default arguments.
 ;; The second level is for style settings for a given styler.
 (define (((styled-text ;; NB: size defaults to 32 since (current-font-size)
-	               ;;     defaults to it. We don't directly use that parameter
-		       ;;     here to avoid an unnecessary dependency on slideshow
-	               #:size [default-size 32]
+                       ;;     defaults to it. We don't directly use that parameter
+                       ;;     here to avoid an unnecessary dependency on slideshow
+                       #:size [default-size 32]
                        #:color [default-color "black"]
                        #:face [default-face null]
                        #:line-sep [default-ls 0]
-		       #:left-pad [default-lp 0]
-		       #:bold? [default-bold? #f]
-		       #:italic? [default-italic? #f])
+                       #:left-pad [default-lp 0]
+                       #:bold? [default-bold? #f]
+                       #:italic? [default-italic? #f]
+                       #:transform [default-transform values])
           #:size [*size default-size]
           #:color [*color default-color]
           #:face [*face default-face]
           #:line-sep [*line-sep default-ls]
-	  #:left-pad [*left-pad default-lp]
-	  #:bold? [*bold? default-bold?]
-	  #:italic? [*italic? default-italic?])
-         ;; for overriding at specific call sites
-         #:size [size *size]
-         #:color [color *color]
-         #:face [face *face]
-         #:line-sep [line-sep *line-sep]
-	 #:left-pad [left-pad *left-pad]
-	 #:bold? [bold? *bold?]
-	 #:italic? [italic? *italic?]
-         ;; the actual strings/picts provided
-         . strs-or-picts)
+	        #:left-pad [*left-pad default-lp]
+	        #:bold? [*bold? default-bold?]
+	        #:italic? [*italic? default-italic?]
+	        #:transform [*transform default-transform])
+    ;; for overriding at specific call sites
+    #:size [size *size]
+    #:color [color *color]
+    #:face [face *face]
+    #:line-sep [line-sep *line-sep]
+	  #:left-pad [left-pad *left-pad]
+	  #:bold? [bold? *bold?]
+	  #:italic? [italic? *italic?]
+	  #:transform [transform *transform]
+    ;; the actual strings/picts provided
+    . strs-or-picts)
   (define font-style
     `(,@(if bold? '(bold) '())
       ,@(if italic? '(italic) '())
@@ -109,5 +113,6 @@
                       str-or-pict]
                      [else
                       (error "expected a string or pict argument")]))))
-    (hbl-append (blank left-pad 1) ; just for padding
-		(vl-append line-sep txt line-pict))))
+    (transform
+     (hbl-append (blank left-pad 1) ; just for padding
+                 (vl-append line-sep txt line-pict)))))

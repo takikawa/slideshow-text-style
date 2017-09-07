@@ -1,11 +1,12 @@
 #lang scribble/manual
 
 @(require scribble/example
-          (for-label slideshow
+          (for-label pict
+                     slideshow
                      slideshow-text-style))
 
 @(define sl-eval (make-base-eval))
-@(sl-eval '(require slideshow-text-style))
+@(sl-eval '(require pict slideshow-text-style))
 
 @title{slideshow-text-style: a small library to improve text formatting in slideshow}
 
@@ -27,7 +28,8 @@ fancy text formatting in code for slides.
                            (code:line #:color expr)
                            (code:line #:size expr)
                            (code:line #:line-sep expr)
-                           (code:line #:left-pad expr))]]{
+                           (code:line #:left-pad expr)
+                           (code:line #:transform expr))]]{
 
 This form binds each @racket[name] in the @racket[style-spec]s to functions which
 produce formatted text using Slideshow's @racket[text] function. Each function
@@ -51,12 +53,21 @@ The specifications have the following effects:
         lines in the text in pict units}
   @item{@racket[#:left-pad]: pad the produced pict on the left by the specified
         numeric amount in pict units}
+  @item{@racket[#:transform]: apply the given pict to pict function to the result}
 ]
 
 @examples[#:eval sl-eval
 (with-text-style ([t] [b #:color "blue"])
   (code:comment "This uses at-exps, though you can't tell in the rendered docs")
   @t{Hello @b{World}})
+(define (do-fishy p)
+  (hc-append
+   10
+   (standard-fish 30 20 #:color "PaleGreen")
+   p
+   (standard-fish 30 20 #:direction 'right #:color "PaleGreen")))
+(with-text-style ([t] [fishy #:transform do-fishy])
+  @t{@fishy{One}, @fishy{Two}, @fishy{Three}})
 ]
 }
 
