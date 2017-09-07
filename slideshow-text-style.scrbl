@@ -1,7 +1,11 @@
 #lang scribble/manual
 
-@(require (for-label slideshow
+@(require scribble/example
+          (for-label slideshow
                      slideshow-text-style))
+
+@(define sl-eval (make-base-eval))
+@(sl-eval '(require slideshow-text-style))
 
 @title{slideshow-text-style: a small library to improve text formatting in slideshow}
 
@@ -48,9 +52,15 @@ The specifications have the following effects:
   @item{@racket[#:left-pad]: pad the produced pict on the left by the specified
         numeric amount in pict units}
 ]
+
+@examples[#:eval sl-eval
+(with-text-style ([t] [b #:color "blue"])
+  (code:comment "This uses at-exps, though you can't tell in the rendered docs")
+  @t{Hello @b{World}})
+]
 }
 
-Here is a full example that you can run:
+Here is a more interesting example that you can try out:
 
 @codeblock|{
 #lang at-exp slideshow
