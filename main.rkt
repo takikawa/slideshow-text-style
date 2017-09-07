@@ -3,7 +3,6 @@
 ;; A pict text styling library for slideshow
 
 (require pict
-         slideshow/base
          (only-in scribble/text split-lines)
          (for-syntax racket/base
                      syntax/parse))
@@ -64,7 +63,10 @@
 ;; A double-curried function that produces styled text picts
 ;; The first level of currying is for default arguments.
 ;; The second level is for style settings for a given styler.
-(define (((styled-text #:size [default-size (current-font-size)]
+(define (((styled-text ;; NB: size defaults to 32 since (current-font-size)
+	               ;;     defaults to it. We don't directly use that parameter
+		       ;;     here to avoid an unnecessary dependency on slideshow
+	               #:size [default-size 32]
                        #:color [default-color "black"]
                        #:face [default-face null]
                        #:line-sep [default-ls 0]
