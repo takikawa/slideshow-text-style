@@ -63,6 +63,7 @@ The specifications have the following effects:
 @examples[#:eval sl-eval
 (with-text-style ([t] [b #:color "blue"])
   (code:comment "This uses at-exps, though you can't tell in the rendered docs")
+  (code:comment "It's supposed to look like @t{Hello @b{World}}")
   @t{Hello @b{World}})
 (define (do-fishy p)
   (hc-append
@@ -71,6 +72,7 @@ The specifications have the following effects:
    p
    (standard-fish 30 20 #:direction 'right #:color "PaleGreen")))
 (with-text-style ([t] [fishy #:transform do-fishy])
+  (code:comment "@t{@fishy{One}, @fishy{Two}, @fishy{Three}}")
   @t{@fishy{One}, @fishy{Two}, @fishy{Three}})
 (with-text-style ([t]
                   [ti #:transform
