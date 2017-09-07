@@ -54,6 +54,10 @@ The specifications have the following effects:
   @item{@racket[#:left-pad]: pad the produced pict on the left by the specified
         numeric amount in pict units}
   @item{@racket[#:transform]: apply the given pict to pict function to the result}
+  @item{@racket[#:h-append]: the given function is used to append picts that are
+        formatted in the same line. Defaults to @racket[hbl-append].}
+  @item{@racket[#:v-append]: the given function is used to append each line of
+        the formatted pict. Defaults to @racket[vl-append].}
 ]
 
 @examples[#:eval sl-eval
@@ -68,6 +72,10 @@ The specifications have the following effects:
    (standard-fish 30 20 #:direction 'right #:color "PaleGreen")))
 (with-text-style ([t] [fishy #:transform do-fishy])
   @t{@fishy{One}, @fishy{Two}, @fishy{Three}})
+(with-text-style ([t]
+                  [ti #:transform
+                    (lambda (p) @t[#:h-append hc-append #:left-pad 30]{• @p})])
+  @ti{Like a bulleted list})
 ]
 }
 
