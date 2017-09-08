@@ -10,6 +10,8 @@
 
 @title{slideshow-text-style: a small library to improve text formatting in slideshow}
 
+@author[(author+email "Asumu Takikawa" "asumu@racket-lang.org")]
+
 @(defmodule slideshow-text-style)
 
 This module provides a single macro that's intended for use with Scribble's
