@@ -108,6 +108,14 @@
       .
       ,face))
   (define lines (split-lines strs-or-picts))
+  (define text-fn
+    (cond [(number? size) text]
+          [(and (pair? size)
+		(eq? (car size) 'auto)
+		(number? (cdr size)))
+	   (λ (str f sz)
+	     (auto-text str (cdr sz) f))]
+	  [else (error "invalid size argument")]))
   (define base
     (for/fold ([txt (blank 0 0)])
               ([line (in-list lines)])
@@ -116,7 +124,7 @@
                (for/list ([str-or-pict (in-list line)])
                  (cond [(string? str-or-pict)
                         ;; TODO: handle angle?
-                        (colorize (text str-or-pict font-style size)
+                        (colorize (text-fn str-or-pict font-style size)
                                   color)]
                        [(pict? str-or-pict)
                         str-or-pict]
@@ -125,3 +133,26 @@
       (hbl-append (blank left-pad 1) ; just for padding
                   (v-append line-sep txt line-pict))))
   (transform base))
+
+;; Works like `text` but tries to fit the rendered text in a space that is
+;; `target` pixels wide
+(define (auto-text str target [style null] [angle 0])
+  (define initial-min 0)
+  (define initial-max 1000)
+
+  (define (close-enough? width target)
+    (< (abs (- width target)) 10))
+
+  (define (bin-search cur-min cur-max)
+    (define next-size
+      (inexact->exact
+       (round (+ cur-min (/ (- cur-max cur-min) 2)))))
+    (define width (pict-width (text str style next-size angle)))
+    (cond [(close-enough? width target)
+           (text str style next-size angle)]
+          [(> width target)
+           (bin-search cur-min next-size)]
+          [(< width target)
+           (bin-search next-size cur-max)]))
+
+  (bin-search initial-min initial-max))
