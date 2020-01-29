@@ -1,14 +1,16 @@
 slideshow-text-style
 --------------------
 
+[![Scribble](https://img.shields.io/badge/Docs-Scribble-blue.svg)](https://docs.racket-lang.org/slideshow-text-style/index.html)
+
 This library provides a macro that allows convenient formatting of text
 in Slideshow presentations without manually constructing text picts.
 
-See `example.rkt` for a usage example.
+See `example.rkt` or the docs for a usage example.
 
 ---
 
-Copyright © 2016 Asumu Takikawa
+Copyright © 2016-2020 Asumu Takikawa
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the Free
